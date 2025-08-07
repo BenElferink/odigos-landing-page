@@ -97,13 +97,14 @@ export const Card = ({ image, imageWidth, imageHeight, onImageError, title, larg
           alt={title}
           width={imageWidth}
           height={imageHeight}
-          fill={!imageWidth && !imageHeight}
-          objectFit='cover'
-          objectPosition='center'
+          fill={!imageWidth || !imageHeight}
           onError={() => onImageError?.()}
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
         />
       </TopHalf>
-
       <BottomHalf $isMobile={isMobile} $gap={isMobile ? 24 : 32} $justify='space-between'>
         <FlexColumn $gap={isMobile ? 8 : 16}>
           <Title $isMobile={isMobile} $isHovered={isHovered} $isLarge={largeTitle}>

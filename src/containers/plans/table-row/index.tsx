@@ -46,7 +46,18 @@ const RowTag = styled(Text)<{ $isMobile: boolean; $isOss: boolean }>`
 `;
 
 const RowBoolean = ({ isMobile, value }: { isMobile: boolean; value: boolean }) => {
-  return <Image src={value ? '/assets/icons/check.gif' : '/assets/icons/cross.svg'} alt={value ? 'check' : 'cross'} width={isMobile ? 50 : 32} height={isMobile ? 50 : 32} />;
+  return (
+    <Image
+      src={value ? '/assets/icons/check.gif' : '/assets/icons/cross.svg'}
+      alt={value ? 'check' : 'cross'}
+      width={isMobile ? 50 : 32}
+      height={isMobile ? 50 : 32}
+      style={{
+        maxWidth: '100%',
+        height: 'auto',
+      }}
+    />
+  );
 };
 
 export const TableRow = ({ label, oss, enterprise }: (typeof PLANS.base)[number]) => {

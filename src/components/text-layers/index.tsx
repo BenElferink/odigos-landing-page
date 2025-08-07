@@ -11,6 +11,8 @@ interface TitleSettingProps {
   largeTitle?: boolean;
   extraLargeTitle?: boolean;
   minWidth?: string;
+  maxWidth?: string;
+  center?: boolean;
 }
 
 interface TextLayersProps {
@@ -19,27 +21,29 @@ interface TextLayersProps {
   typistTitles?: string[];
   titleSettings?: TitleSettingProps;
   descriptions?: string[];
+  bullets?: string[];
 }
 
 const getTitleFontSize = (isMobile: boolean, isSmall?: boolean, isLarge?: boolean, isExtraLarge?: boolean) => {
   return isMobile ? (isSmall ? '20px' : isExtraLarge ? '40px' : '32px') : isSmall ? '32px' : isExtraLarge ? '60px' : isLarge ? '56px' : '48px';
 };
 
-const Container = styled.div`
+const Container = styled.div<{ $center?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: ${({ $center }) => ($center ? 'center' : 'flex-start')};
   align-self: stretch;
   gap: 24px;
 `;
 
-const Titles = styled.div<{ $isMobile: boolean; $minWidth?: string }>`
+const Titles = styled.div<{ $isMobile: boolean; $minWidth?: string; $maxWidth?: string; $center?: boolean }>`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: ${({ $center }) => ($center ? 'center' : 'flex-start')};
   gap: 10px;
   min-width: ${({ $minWidth }) => $minWidth || 'unset'};
+  max-width: ${({ $maxWidth }) => $maxWidth || 'unset'};
 `;
 
 const MiniTitle = styled(Text)<{ $isMobile: boolean }>`
@@ -54,16 +58,16 @@ const Title = styled(Text)<{
   $isSmall?: boolean;
   $isLarge?: boolean;
   $isExtraLarge?: boolean;
+  $center?: boolean;
 }>`
   font-weight: 600;
   font-size: ${({ $isMobile, $isSmall, $isLarge, $isExtraLarge }) => getTitleFontSize($isMobile, $isSmall, $isLarge, $isExtraLarge)};
   line-height: 110%;
   letter-spacing: ${({ $isMobile }) => ($isMobile ? '-0.8px' : '-1.72px')};
+  text-align: ${({ $center }) => ($center ? 'center' : 'start')};
 `;
 
-const DescriptionsWrapper = styled.div<{
-  $isMobile: boolean;
-}>`
+const DescriptionsWrapper = styled.div<{ $isMobile: boolean }>`
   max-width: ${({ $isMobile }) => ($isMobile ? 'unset' : '50vw')};
   display: flex;
   flex-direction: column;
@@ -74,23 +78,32 @@ const DescriptionsWrapper = styled.div<{
 
 const Description = styled(Text)<{ $isMobile: boolean }>`
   color: ${({ theme }) => theme.colors.off_white};
-  font-weight: 400;
   font-size: ${({ $isMobile }) => ($isMobile ? '16px' : '18px')};
   line-height: ${({ $isMobile }) => ($isMobile ? '28px' : '32px')};
   letter-spacing: ${({ $isMobile }) => ($isMobile ? '0.3px' : '0.4px')};
 `;
 
-export const TextLayers = ({ miniTitle, title, typistTitles, titleSettings, descriptions }: TextLayersProps) => {
+const BulletsWrapper = styled.ul`
+  list-style: disc;
+  list-style-position: outside;
+  margin: 0;
+  padding-left: 24px;
+  color: ${({ theme }) => theme.colors.off_white};
+`;
+
+const Bullet = styled.li``;
+
+export const TextLayers = ({ miniTitle, title, typistTitles, titleSettings, descriptions, bullets }: TextLayersProps) => {
   const theme = useTheme();
   const { isMobile } = useMobile();
 
   return (
-    <Container>
+    <Container $center={titleSettings?.center}>
       {miniTitle || title ? (
-        <Titles $isMobile={isMobile} $minWidth={titleSettings?.minWidth}>
+        <Titles $isMobile={isMobile} $minWidth={titleSettings?.minWidth} $maxWidth={titleSettings?.maxWidth} $center={titleSettings?.center}>
           {miniTitle && <MiniTitle $isMobile={isMobile}>{miniTitle}</MiniTitle>}
           {title && (
-            <Title $isMobile={isMobile} $isSmall={titleSettings?.smallTitle} $isLarge={titleSettings?.largeTitle} $isExtraLarge={titleSettings?.extraLargeTitle}>
+            <Title $isMobile={isMobile} $isSmall={titleSettings?.smallTitle} $isLarge={titleSettings?.largeTitle} $isExtraLarge={titleSettings?.extraLargeTitle} $center={titleSettings?.center}>
               {title}
             </Title>
           )}
@@ -108,6 +121,7 @@ export const TextLayers = ({ miniTitle, title, typistTitles, titleSettings, desc
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
+                textAlign: titleSettings?.center ? 'center' : 'start',
               }}
             />
           ) : null}
@@ -122,6 +136,18 @@ export const TextLayers = ({ miniTitle, title, typistTitles, titleSettings, desc
             </Description>
           ))}
         </DescriptionsWrapper>
+      ) : null}
+
+      {bullets?.length ? (
+        <BulletsWrapper>
+          {bullets.map((bullet) => (
+            <Bullet key={`bullet-${bullet}`}>
+              <Description $isMobile={isMobile} fontWeight={200}>
+                {bullet}
+              </Description>
+            </Bullet>
+          ))}
+        </BulletsWrapper>
       ) : null}
     </Container>
   );

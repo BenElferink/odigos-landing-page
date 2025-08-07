@@ -54,9 +54,17 @@ export const WeAreOdigos = () => {
           }}
         />
       </FlexColumn>
-
       <ContainImage $isMobile={isMobile}>
-        <Image src='/assets/odigos/logo_grid.svg' alt='odigos' width={isMobile ? 197 : 481} height={isMobile ? 197 : 481} />
+        <Image
+          src='/assets/odigos/logo_grid.svg'
+          alt='odigos'
+          width={isMobile ? 197 : 481}
+          height={isMobile ? 197 : 481}
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
+        />
       </ContainImage>
     </Container>
   );

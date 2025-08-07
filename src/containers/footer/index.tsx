@@ -70,7 +70,16 @@ const Footer = () => {
           <TopHalf $isMobile={isMobile}>
             <FlexColumn $gap={12}>
               <Link href='/'>
-                <Image src='/assets/odigos/logo_white.svg' alt='logo' width={45} height={45} />
+                <Image
+                  src='/assets/odigos/logo_white.svg'
+                  alt='logo'
+                  width={45}
+                  height={45}
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
+                />
               </Link>
               <Navigation flexDirection={isMobile ? 'column' : 'row'} gap={12} />
             </FlexColumn>

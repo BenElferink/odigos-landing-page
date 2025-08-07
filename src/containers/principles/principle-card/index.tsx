@@ -24,7 +24,16 @@ export const PrincipleCard = ({ title, description, icon }: (typeof PRINCIPLES)[
 
   return (
     <Container>
-      <Image src={icon} alt={title} width={64} height={64} />
+      <Image
+        src={icon}
+        alt={title}
+        width={64}
+        height={64}
+        style={{
+          maxWidth: '100%',
+          height: 'auto',
+        }}
+      />
       <Text fontSize={isMobile ? 20 : 28} fontWeight={500}>
         {title}
       </Text>
