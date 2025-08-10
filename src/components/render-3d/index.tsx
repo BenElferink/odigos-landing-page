@@ -27,15 +27,11 @@ const Container = styled.div<{ $width: number; $height: number }>`
 `;
 
 export const Render3D = ({ scene, width, height }: Render3DProps) => {
-  const { visibleRef, isVisible } = useOnScreen<HTMLDivElement>();
+  const { visibleRef, isVisible } = useOnScreen<HTMLDivElement>(undefined, '256px');
 
   return (
     <Container ref={visibleRef} $width={width} $height={height}>
-      {/*
-        !! renderOnDemand={false} is important to prevent WebGL errors, for example:
-        "WebGL: INVALID_FRAMEBUFFER_OPERATION: Framebuffer is incomplete: Attachment has zero size."
-      */}
-      {scene && isVisible && <Spline scene={scene} renderOnDemand={false} />}
+      {scene && isVisible && <Spline scene={scene} renderOnDemand />}
     </Container>
   );
 };
