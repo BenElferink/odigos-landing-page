@@ -1,4 +1,7 @@
-import { DOCS_LINK, GITHUB_LINK } from './links';
+import { CAREERS_LINK, DOCS_LINK, GITHUB_LINK } from './links';
+
+export const HEADER_HEIGHT_MOBILE = 75;
+export const HEADER_HEIGHT_DESKTOP = 91;
 
 export const NAVIGATION = [
   {
@@ -16,6 +19,10 @@ export const NAVIGATION = [
   {
     label: 'Blog',
     href: '/blog',
+  },
+  {
+    label: 'Careers',
+    href: CAREERS_LINK,
   },
   {
     label: 'Documentation',

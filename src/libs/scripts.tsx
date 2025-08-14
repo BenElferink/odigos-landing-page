@@ -5,6 +5,7 @@ import Script from 'next/script';
 const Scripts = () => {
   return (
     <>
+      <Script id='cookieyes-banner' strategy='beforeInteractive' src='https://cdn-cookieyes.com/client_data/b873ab43d440c7e433a75c19/script.js' />
       <Script id='hs-script-loader' strategy='afterInteractive' src='//js-eu1.hs-scripts.com/144171524.js' />
       <Script id='redodev-integration' strategy='afterInteractive'>
         {`
@@ -75,6 +76,18 @@ const Scripts = () => {
             );
             document.head.appendChild(script);
           })();
+        `}
+      </Script>
+      <Script id='hotjar-tracking' strategy='afterInteractive'>
+        {`
+          (function(h,o,t,j,a,r){
+              h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+              h._hjSettings={hjid:6491105,hjsv:6};
+              a=o.getElementsByTagName('head')[0];
+              r=o.createElement('script');r.async=1;
+              r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+              a.appendChild(r);
+          })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
         `}
       </Script>
     </>

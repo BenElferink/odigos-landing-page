@@ -8,12 +8,12 @@ export const ProductPreview = () => {
   const theme = useTheme();
   const { isMobile, screenWidth } = useMobile();
 
-  const imageWidth = screenWidth * (isMobile ? 0.85 : 0.55);
-  const imageHeight = imageWidth / (3840 / 2160);
+  const imageWidth = screenWidth * (isMobile ? 0.85 : 0.45);
+  const imageHeight = imageWidth / (1440 / 900);
 
   return (
     <Image
-      src='/assets/renders/product_preview.png'
+      src='/assets/renders/product_preview.svg'
       alt='product'
       priority
       width={imageWidth}

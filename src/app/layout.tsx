@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { CAREERS_LINK } from '@/constants';
 import { getAllBlogs } from '@/libs/markdown';
 import PlausibleProvider from 'next-plausible';
 
@@ -8,7 +7,7 @@ const ThemeProvider = dynamic(() => import('@/styles/theme-provider'));
 const MobileProvider = dynamic(() => import('@/contexts/useMobile'));
 const BlogsProvider = dynamic(() => import('@/contexts/useBlogs'));
 
-const AnnouncementBanner = dynamic(() => import('@/containers/announcement-banner'));
+// const AnnouncementBanner = dynamic(() => import('@/containers/announcement-banner'));
 const Header = dynamic(() => import('@/containers/header'));
 const Footer = dynamic(() => import('@/containers/footer'));
 const Modals = dynamic(() => import('@/containers/modals'));
@@ -59,7 +58,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         suppressHydrationWarning={true}
         style={{
           width: '100vw',
-          height: '100vh',
+          minHeight: '100vh',
           margin: 0,
           padding: 0,
           backgroundColor: '#0F0F0F',
@@ -69,7 +68,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider>
             <MobileProvider>
               <BlogsProvider blogs={blogs}>
-                <AnnouncementBanner title='Odigos is hiring!' link={CAREERS_LINK} linkText='Learn more' />
+                {/* TODO: when we add the announcement banner, we have to change it's sticky-behaviour, because it overlaps with the header and breaks the pricing page */}
+                {/* <AnnouncementBanner title='Odigos is hiring!' link={CAREERS_LINK} linkText='Learn more' /> */}
                 <Header />
                 {children}
                 <Footer />
@@ -78,9 +78,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </MobileProvider>
           </ThemeProvider>
         </PlausibleProvider>
+        <Scripts />
       </body>
-
-      <Scripts />
     </html>
   );
 }
